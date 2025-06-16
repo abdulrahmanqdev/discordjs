@@ -30,27 +30,25 @@ bot.on("interactionCreate", async (interaction) => {
 */
 
 
-client.on('ready', () => {
-    checkGuilds();
+bot.on('ready', () => {
+  checkGuilds(bot);
 });
 
-async function checkGuilds() {
-    const guilds = client.guilds.cache.array();
-    
-    for (const guild of guilds) {
-        try {
-            const memberCount = guild.memberCount;
-            if (memberCount < 30) {
-                await guild.leave();
-                console.log(`${memberCount} sunucudan çıktım 30 üyenin altında`);
-            }
-        } catch (err) {
-            console.error(`${err}`);
-        }
+async function checkGuilds(client) {
+  const guilds = client.guilds.cache;
+
+  for (const guild of guilds.values()) {
+    try {
+      const memberCount = guild.memberCount;
+      if (memberCount < 30) {
+        await guild.leave();
+        console.log(`${memberCount} kişilik sunucudan çıktım (30'dan az)`);
+      }
+    } catch (err) {
+      console.error(`❌ Hata: ${err}`);
     }
+  }
 }
-
-
 
 bot
   .login(token)
