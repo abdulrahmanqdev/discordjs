@@ -110,7 +110,7 @@ discordjs/
 │   ├── Handlers/                 # Handler dosyaları
 │   └── SlashCommands/
 │       ├── Public/               # Herkese açık komutlar
-│       └── mod Sy.../            # Moderasyon komutları
+│       └── mod System/            # Moderasyon komutları
 ├── index.js                      # Ana giriş noktası
 ├── tools.js                      # Yardımcı fonksiyonlar
 ├── start.bat                     # Windows başlatma dosyası
