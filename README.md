@@ -6,6 +6,7 @@
   <img src="https://img.shields.io/badge/Discord.js-5865F2?style=for-the-badge&logo=discord&logoColor=white"/>
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/>
   <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black"/>
 </p>
 
 <p align="center">
@@ -15,8 +16,8 @@
 </p>
 
 <p align="center">
-  <strong>Discord.js ile geliştirilmiş özelleştirilebilir Discord botu.</strong><br/>
-  Slash komutları, etkinlik işleyicileri ve modüler yapı ile hazır şablon.
+  <strong>Discord botunuz için kullanabileceğiniz v14 boş altyapı.</strong><br/>
+  Slash komutları, event handler ve Firebase desteğiyle hazır başlangıç şablonu.
 </p>
 
 </div>
@@ -25,18 +26,19 @@
 
 ## 📖 Genel Bakış
 
-**discordjs**, Discord.js v14 kullanılarak geliştirilmiş modüler bir Discord bot şablonudur. Slash komutları, event handler'lar ve kolayca genişletilebilir yapısıyla kendi botunu saniyeler içinde hayata geçirebilirsin.
+**discordjs**, Discord.js v14 kullanılarak hazırlanmış, modüler ve genişletilebilir bir Discord bot altyapısıdır. Slash komutları, event handler'lar ve Firebase entegrasyonuyla birlikte gelir. Kendi botunu hızlıca hayata geçirmek için temiz bir başlangıç noktası sunar.
 
 ---
 
 ## ✨ Özellikler
 
 - ⚡ Discord.js v14 desteği
-- 🗂️ Modüler slash komut yapısı
-- 📡 Etkinlik (event) handler sistemi
-- 🔧 Kolay yapılandırma — sadece `.env` dosyasını doldur
-- 🪵 Konsol loglama sistemi
-- 🔄 Otomatik komut kaydı (global & guild)
+- 🗂️ Modüler slash komut yapısı (Public & Mod)
+- 📡 Event handler sistemi
+- 🔥 Firebase veritabanı entegrasyonu
+- 🔧 Tek dosyadan kolay yapılandırma (`botConfig.js`)
+- 🖱️ Windows için hazır `start.bat` başlatma dosyası
+- 🛠️ Yardımcı fonksiyonlar için `tools.js`
 
 ---
 
@@ -47,6 +49,7 @@
 | Discord.js v14 | Discord API Kütüphanesi |
 | Node.js | Çalışma Ortamı |
 | JavaScript | Dil |
+| Firebase | Veritabanı |
 
 ---
 
@@ -54,7 +57,8 @@
 
 ### Gereksinimler
 - Node.js `>= 18.x`
-- Discord Bot Token ([Discord Developer Portal](https://discord.com/developers/applications))
+- [Discord Developer Portal](https://discord.com/developers/applications) üzerinden bir bot token'ı
+- Firebase projesi ve `serviceAccountKey.json` dosyası
 
 ### Kurulum
 
@@ -64,20 +68,32 @@ cd discordjs
 npm install
 ```
 
-### Ortam Değişkenleri
+### Yapılandırma
 
-`.env` dosyası oluştur:
+`Source/Config/botConfig.js` dosyasını düzenle:
 
-```env
-DISCORD_TOKEN=bot_tokenin_buraya
-CLIENT_ID=uygulama_id_buraya
-GUILD_ID=sunucu_id_buraya
+```js
+module.exports = {
+  developersID: ["developerId"],
+  token: "token",
+  databaseURL: "firebase_database_url",
+  serviceAccountKey: require('./serviceAccountKey.json'),
+
+  playings: ["/yardım | !yardım"],
+  prefixs: ["!"],
+}
 ```
 
-### Çalıştır
+### Çalıştırma
 
+**Linux / Mac:**
 ```bash
 node index.js
+```
+
+**Windows:**
+```
+start.bat dosyasına çift tıkla
 ```
 
 ---
@@ -86,11 +102,20 @@ node index.js
 
 ```
 discordjs/
-├── commands/           # Slash komutları
-├── events/             # Discord etkinlik işleyicileri
-├── index.js            # Ana giriş noktası
-├── .env                # Ortam değişkenleri
-└── package.json
+├── Source/
+│   ├── Config/
+│   │   └── botConfig.js          # Bot yapılandırması (token, prefix vb.)
+│   ├── Events/
+│   │   └── bot Events/           # Discord olayları
+│   ├── Handlers/                 # Handler dosyaları
+│   └── SlashCommands/
+│       ├── Public/               # Herkese açık komutlar
+│       └── mod Sy.../            # Moderasyon komutları
+├── index.js                      # Ana giriş noktası
+├── tools.js                      # Yardımcı fonksiyonlar
+├── start.bat                     # Windows başlatma dosyası
+├── package.json
+└── LICENSE
 ```
 
 ---
